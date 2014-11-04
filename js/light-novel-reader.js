@@ -32,7 +32,7 @@ app.directive('dynamic', function ($compile) {
 	    }
 	  };
 });
-app.controller('lightNovelCrtl',function($scope,$http,messageService){
+app.controller('lightNovelCrtl',function($scope,$http,$timeout,messageService){
 	$scope.loadingDisplay = "block";
 	$scope.content = "";
 	$http.get('novel.json').success(function(data){
@@ -119,7 +119,15 @@ app.controller('lightNovelCrtl',function($scope,$http,messageService){
 			for(var n = 0;n < $scope.stories.length;n++){
 				if($scope.stories[n].name == $scope.selectedStory){
 					$scope.chapters = $scope.stories[n].chapters;
-					$scope.selectedChapter = "None";
+					if($scope.chapters.length > 0){
+						$timeout(function() {
+							$scope.selectedChapter = $scope.chapters[0].id;
+							$scope.selectedChapterChange();
+						}, 10);
+					}
+					else{
+						$scope.selectedChapter = "None";
+					}
 				}
 			}
 			//console.log("Selected Story is " + $scope.selectedStory);
