@@ -17,6 +17,9 @@ if(isset($_GET["url"]) && isset($_GET["translator"])){
 			case "yoraikun":
 				echo parseYoraikun($result.'');
 				break;
+			case "hatoken":
+				echo parseHatoken($result.'');
+				break;
 			case "epithetic":
 				echo parseEpithetic($result.'');
 				break;
@@ -69,6 +72,12 @@ function parseBakahou($html){
 	$string = explode('<div class="entry-content clear">',$html);
 	$string = explode('<div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled">',$string[1]);	
 	return $string[0]; 
+}
+
+function parseHatoken($html){
+	$string = explode('<div class="entry-content">',$html);
+	$string = explode('<div id="jp-post-flair" class="sharedaddy sharedaddy-dark sd-like-enabled sd-sharing-enabled">',$string[1]);
+	return $string[0];
 }
 
 function parseAnonTranslator($html){
